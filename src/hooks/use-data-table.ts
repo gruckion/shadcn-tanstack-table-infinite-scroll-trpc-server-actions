@@ -119,7 +119,7 @@ export function useDataTable<TData, TValue>({
 
   // Search params
   const search = schema.parse(Object.fromEntries(searchParams))
-  const page = search.page
+  const { page } = search
   const perPage = search.per_page ?? defaultPerPage
   const sort = search.sort ?? defaultSort
   const [column, order] = sort?.split(".") ?? []
@@ -246,7 +246,9 @@ export function useDataTable<TData, TValue>({
 
   React.useEffect(() => {
     // Opt out when advanced filter is enabled, because it contains additional params
-    if (enableAdvancedFilter) return
+    if (enableAdvancedFilter) {
+      return
+    }
 
     // Prevent resetting the page on initial render
     if (!mounted) {

@@ -12,6 +12,9 @@ import { type GetTasksSchema } from "./validations"
 
 export async function getTasks(input: GetTasksSchema) {
   noStore()
+
+  // wait 3 seconds
+  await new Promise((resolve) => setTimeout(resolve, 1200))
   const { page, per_page, sort, title, status, priority, operator, from, to } =
     input
 
@@ -38,7 +41,7 @@ export async function getTasks(input: GetTasksSchema) {
           })
         : undefined,
       // Filter tasks by status
-      !!status
+      status
         ? filterColumn({
             column: tasks.status,
             value: status,
@@ -46,7 +49,7 @@ export async function getTasks(input: GetTasksSchema) {
           })
         : undefined,
       // Filter tasks by priority
-      !!priority
+      priority
         ? filterColumn({
             column: tasks.priority,
             value: priority,
